@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  neo4j:
+    image: neo4j:4.4-community
+    container_name: neo4j-sql-generator-neo4j
+    ports:
+      - "7474:7474"  # HTTP
+      - "7687:7687"  # Bolt
+    environment:
+      - NEO4J_AUTH=neo4j/password
+      - NEO4J_dbms_connector_https_advertised__address=localhost:7473
+      - NEO4J_dbms_connector_http_advertised__address=localhost:7474
+      - NEO4J_dbms_connector_bolt_advertised__address=localhost:7687
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:7474 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - neo4j-sql-generator-network
+
+volumes:
+  neo4j_data:
+    name: neo4j-sql-generator-data
+  neo4j_logs:
+    name: neo4j-sql-generator-logs
+
+networks:
+  neo4j-sql-generator-network:
+    name: neo4j-sql-generator-network
+    driver: bridge
