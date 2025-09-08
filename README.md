@@ -1,6 +1,6 @@
 # Neo4j SQL Generator
 
-***in development***
+***in development - actually only skeleton and idea***
 
 A Domain Driven Design (DDD) application for designing Neo4j graph schemas visually and generating corresponding SQL database schemas with full table structures, relationships, and constraints.
 
